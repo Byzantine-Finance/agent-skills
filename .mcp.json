@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "byzantine-docs": {
+      "type": "http",
+      "url": "https://docs.byzantine.fi/mcp"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate skills and manifests
+        run: node scripts/validate.mjs
+      - name: Test bundled scripts
+        run: node --test tests/
+      - name: Skills CLI discovers every skill
+        env:
+          DISABLE_TELEMETRY: "1"
+        run: |
+          out=$(npx -y skills add . --list 2>&1)
+          for d in skills/*/; do
+            name=$(basename "$d")
+            echo "$out" | grep -q "$name" || { echo "skills CLI did not list $name"; exit 1; }
+          done

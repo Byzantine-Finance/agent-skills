@@ -1,0 +1,21 @@
+{
+  "$schema": "https://skills.sh/schemas/skills.sh.schema.json",
+  "notGrouped": "bottom",
+  "groupings": [
+    {
+      "title": "Start here",
+      "description": "Entry point: routes your agent to the right Byzantine skill.",
+      "skills": ["byzantine"]
+    },
+    {
+      "title": "Integrate",
+      "description": "Request signing, passkey money flows and webhooks.",
+      "skills": ["byzantine-api-auth", "byzantine-money-movement", "byzantine-webhooks"]
+    },
+    {
+      "title": "Reference",
+      "description": "Look up any endpoint in the live OpenAPI spec.",
+      "skills": ["byzantine-api-generic"]
+    }
+  ]
+}

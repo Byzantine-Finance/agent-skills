@@ -1,0 +1,26 @@
+{
+  "name": "byzantine-agent-skills",
+  "owner": {
+    "name": "Byzantine Finance",
+    "email": "info@byzantine.fi"
+  },
+  "metadata": {
+    "description": "Official Byzantine Finance agent skills for Claude Code",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "byzantine",
+      "description": "Use when doing ANY task involving Byzantine Finance: the Byzantine API and @byzantine/integrator-sdk, request signing (P-256), passkey-signed deposits and withdrawals, account activation, KYC/KYB onboarding, webhooks, sandbox.api.byzantine.fi.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/byzantine",
+        "./skills/byzantine-api-auth",
+        "./skills/byzantine-money-movement",
+        "./skills/byzantine-webhooks",
+        "./skills/byzantine-api-generic"
+      ]
+    }
+  ]
+}
