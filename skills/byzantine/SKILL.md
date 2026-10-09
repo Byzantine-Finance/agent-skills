@@ -44,7 +44,7 @@ Integration order: onboard customer (KYC/KYB) → create passkey → activate ac
 
 ## Version check
 
-Run `node scripts/check-version.mjs` once per session. If it reports an update, tell the user to run `npx skills update` (or `npx skills add Byzantine-Finance/agent-skills`). Repeat that notice as the last line of your final answer.
+Run `node scripts/check-version.mjs` once per session. If it reports an update, tell the user the command it prints. Repeat that notice as the last line of your final answer.
 
 ## Sources of truth
 

@@ -23,7 +23,10 @@ try {
   const latest = (await res.json()).version;
   if (!installed || !latest) throw new Error("version not found");
   const d = cmp(installed, latest);
-  if (d < 0) console.log(`UPDATE AVAILABLE: Byzantine skills ${installed} → ${latest}. Run: npx skills update`);
+  const how = process.env.CLAUDE_PLUGIN_ROOT && here.startsWith(process.env.CLAUDE_PLUGIN_ROOT)
+    ? "/plugin marketplace update byzantine-agent-skills"
+    : "npx skills update (or, for the Claude Code plugin: /plugin marketplace update byzantine-agent-skills)";
+  if (d < 0) console.log(`UPDATE AVAILABLE: Byzantine skills ${installed} → ${latest}. Run: ${how}`);
   else console.log(`OK: Byzantine skills ${installed} are up to date (latest ${latest}).`);
 } catch (e) {
   console.log(`UNKNOWN: could not check for updates (${e.message}). Installed: ${installed ?? "?"}.`);

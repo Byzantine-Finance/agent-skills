@@ -18,6 +18,8 @@ jobs:
           node-version: 22
       - name: Validate skills and manifests
         run: node scripts/validate.mjs
+      - name: Validate Claude plugin manifests
+        run: npx -y @anthropic-ai/claude-code plugin validate .
       - name: Test bundled scripts
         run: node --test tests/*.test.mjs
       - name: Skills CLI discovers every skill

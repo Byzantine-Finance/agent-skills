@@ -54,10 +54,9 @@ for (const dir of skillDirs) {
   }
 }
 
-const listed = marketplace.plugins.flatMap((p) => p.skills.map((s) => path.basename(s)));
-for (const d of skillDirs) if (!listed.includes(d)) err(`.claude-plugin/marketplace.json: skill ${d} not listed`);
-for (const s of listed) if (!skillDirs.includes(s)) err(`.claude-plugin/marketplace.json: lists missing skill ${s}`);
-if (marketplace.metadata?.version !== pkg.version) err(`marketplace.json version ${marketplace.metadata?.version} != ${pkg.version}`);
+const plugin = JSON.parse(read(".claude-plugin/plugin.json"));
+if (plugin.version !== pkg.version) err(`.claude-plugin/plugin.json version ${plugin.version} != package.json ${pkg.version}`);
+if (!marketplace.plugins.some((p) => p.name === plugin.name && p.source === "./")) err(`marketplace.json must list plugin "${plugin.name}" with source "./"`);
 
 const grouped = skillsSh.groupings.flatMap((g) => g.skills);
 for (const d of skillDirs) if (!grouped.includes(d)) err(`skills.sh.json: skill ${d} not in any group`);

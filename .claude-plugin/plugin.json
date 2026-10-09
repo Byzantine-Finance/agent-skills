@@ -1,0 +1,10 @@
+{
+  "name": "byzantine",
+  "version": "0.1.0",
+  "description": "Official Byzantine Finance skills: integrate the Byzantine API end to end (onboarding and passkeys, P-256 request signing, passkey-signed deposits and withdrawals, balances and yield, webhooks), plus the Byzantine docs MCP server.",
+  "author": { "name": "Byzantine Finance", "email": "info@byzantine.fi", "url": "https://byzantine.fi" },
+  "homepage": "https://docs.byzantine.fi",
+  "repository": "https://github.com/Byzantine-Finance/agent-skills",
+  "license": "Apache-2.0",
+  "keywords": ["byzantine", "yield", "vaults", "stablecoins", "passkeys", "kyc", "fintech", "api"]
+}
