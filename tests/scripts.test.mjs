@@ -1,4 +1,4 @@
-// Offline tests for the bundled scripts. Run: node --test tests/
+// Offline tests for the bundled scripts. Run: npm test
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
 import crypto from "node:crypto";

@@ -19,7 +19,7 @@ jobs:
       - name: Validate skills and manifests
         run: node scripts/validate.mjs
       - name: Test bundled scripts
-        run: node --test tests/
+        run: node --test tests/*.test.mjs
       - name: Skills CLI discovers every skill
         env:
           DISABLE_TELEMETRY: "1"
