@@ -4,18 +4,34 @@
   "groupings": [
     {
       "title": "Start here",
-      "description": "Entry point: routes your agent to the right Byzantine skill.",
-      "skills": ["byzantine"]
+      "description": "Entry point: how Byzantine works, the end-to-end integration playbook, and routing to the right skill.",
+      "skills": [
+        "byzantine"
+      ]
     },
     {
       "title": "Integrate",
-      "description": "Request signing, passkey money flows and webhooks.",
-      "skills": ["byzantine-api-auth", "byzantine-money-movement", "byzantine-webhooks"]
+      "description": "Onboarding and passkeys, request signing, money movement and webhooks.",
+      "skills": [
+        "byzantine-onboarding",
+        "byzantine-api-auth",
+        "byzantine-money-movement",
+        "byzantine-webhooks"
+      ]
+    },
+    {
+      "title": "Build the experience",
+      "description": "Balances, yield and history for users and back office.",
+      "skills": [
+        "byzantine-reporting"
+      ]
     },
     {
       "title": "Reference",
       "description": "Look up any endpoint in the live OpenAPI spec.",
-      "skills": ["byzantine-api-generic"]
+      "skills": [
+        "byzantine-api-generic"
+      ]
     }
   ]
 }

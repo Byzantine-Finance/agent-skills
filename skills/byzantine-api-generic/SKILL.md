@@ -38,9 +38,7 @@ Cached 24 h in `~/.cache/byzantine-agent-skills/`.
 - Account creation returns **201**. Duplicate owner email per integrator is rejected: use `+tag` emails in sandbox tests.
 - Errors: `{"error": "...", "status": N}`; body/shape errors are plain-text 400/415/422.
 
-## Onboarding pointers (KYC/KYB)
-
-`create-individual-account` / `create-entity-account` (requires `byzantineTermsSignedAt`, at least one `rootUsers` entry) → repeat `update-*-account` / `add-associated-person` until `missingDocuments` (and `missingCompanyData` for entities) is empty → the check starts automatically → wait for `customer.active` (webhook) or poll `get-user-details` / `get-entity-details`. In sandbox, approval is automatic once the automated checks pass. Supporting value lists (countries, industry, occupation codes) are in the docs under `api-reference/lists/`.
+For accounts, KYC/KYB and passkeys use `byzantine-onboarding`; for balances and history use `byzantine-reporting`.
 
 ## Docs
 

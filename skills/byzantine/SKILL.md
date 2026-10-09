@@ -14,10 +14,16 @@ Byzantine is non-custodial yield infrastructure: integrators (fintechs, B2B plat
 
 | Task | Skill |
 |---|---|
+| Accounts, KYC/KYB, passkey creation, OTP, invitations, roles | `byzantine-onboarding` |
 | Sign requests, keys, 401/403/429 | `byzantine-api-auth` |
 | Deposit, withdraw, activate, transfer, cancel, vault upgrade, passkey signing, transaction statuses | `byzantine-money-movement` |
+| Balances, APY, yield charts, transaction lists, dashboards | `byzantine-reporting` |
 | Webhook receiver, signature verification, events replay | `byzantine-webhooks` |
-| Any other endpoint (customers, KYC/KYB, balances, bank accounts, vaults, invitations…) | `byzantine-api-generic` |
+| Any other endpoint or field | `byzantine-api-generic` |
+
+**A human wants to integrate Byzantine end to end** (new project, "how do I connect everything", "where do I start"): follow `references/integration-playbook.md`, phase by phase.
+
+**A human asks how Byzantine works** (product, custody, fees, flows, timing): answer from `references/concepts.md`; for legal, regulatory or risk questions, point to https://docs.byzantine.fi instead of answering from memory.
 
 ## The one way to integrate
 
