@@ -5,7 +5,7 @@
 //   BYZANTINE_PRIVATE_KEY=0x... node byz-request.mjs GET /v1/integrator/whoami
 //   BYZANTINE_PRIVATE_KEY=0x... node byz-request.mjs POST "/v1/query/get-deposit-payload-passkey?chain_id=8453" '{"accountId":"..."}'
 //
-// BYZANTINE_BASE_URL defaults to https://sandbox.api.byzantine.fi
+// Environment: BYZANTINE_ENV=sandbox (default) | dev, or BYZANTINE_BASE_URL=<url>. Keys are per environment.
 
 import { loadPrivateKey, sign } from "./byz-sign.mjs";
 
@@ -17,7 +17,13 @@ if (!method || !pathAndQuery) {
   process.exit(2);
 }
 
-const base = new URL(process.env.BYZANTINE_BASE_URL ?? "https://sandbox.api.byzantine.fi");
+const ENVS = { sandbox: "https://sandbox.api.byzantine.fi", dev: "https://dev.api.byzantine.fi" };
+const envName = process.env.BYZANTINE_ENV ?? "sandbox";
+if (!process.env.BYZANTINE_BASE_URL && !ENVS[envName]) {
+  console.error(`refused: BYZANTINE_ENV must be one of ${Object.keys(ENVS).join(", ")} (production is never called)`);
+  process.exit(3);
+}
+const base = new URL(process.env.BYZANTINE_BASE_URL ?? ENVS[envName]);
 if (!ALLOWED_HOSTS.has(base.hostname)) {
   console.error(`refused: ${base.hostname} is not a sandbox/dev host. This script never calls production.`);
   process.exit(3);
@@ -44,7 +50,14 @@ try {
   try {
     parsed = JSON.parse(text);
   } catch {}
-  console.log(JSON.stringify({ status: res.status, signedMessage: message, body: parsed }, null, 2));
+  const out = { baseUrl: base.origin, pubkey: headers["X-Pubkey"], status: res.status, signedMessage: message, body: parsed };
+  const err = typeof parsed === "object" ? parsed?.error ?? "" : "";
+  if (err === "Invalid public key") {
+    out.hint = `Signature is valid, but ${base.hostname} has no credential with this public key. Keys are per environment: set BYZANTINE_ENV=dev or sandbox to match where the key was issued, or check it was not revoked.`;
+  } else if (err.startsWith("Invalid signature")) {
+    out.hint = "Signature rejected: run byz-diagnose.mjs with the headers above, see references/signing-pitfalls.md.";
+  }
+  console.log(JSON.stringify(out, null, 2));
   process.exit(res.ok ? 0 : 1);
 } catch (e) {
   console.error(`error: ${e.message}`);

@@ -55,7 +55,7 @@ Other languages: Python and Go signers are in `references/other-languages.md`; o
 
 Run with `node`. They read the key from `BYZANTINE_PRIVATE_KEY` (never pass a key as an argument).
 
-- `node scripts/byz-request.mjs GET /v1/integrator/whoami` — signed call to the **sandbox**; prints status, body and the signed message. Refuses production hosts.
+- `node scripts/byz-request.mjs GET /v1/integrator/whoami` — signed call to the **sandbox** (`BYZANTINE_ENV=dev` for dev); prints base URL, pubkey, status, body, signed message and a hint. Refuses production. Keys are per environment: a valid key sent to the wrong one gets 401 "Invalid public key".
 - `node scripts/byz-sign.mjs POST "/v1/…?chain_id=8453" '<json>'` — print the headers only.
 - `node scripts/byz-diagnose.mjs --pubkey … --timestamp … --signature … --method … --path … --body …` — given what failing code sent, says what is wrong (no key needed).
 
