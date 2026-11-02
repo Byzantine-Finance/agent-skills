@@ -11,5 +11,5 @@ We aim to acknowledge reports within 3 business days.
 
 This repository contains agent skills, helper scripts and an MCP configuration
 for integrating the Byzantine API. The scripts only sign requests locally, call
-the sandbox or dev API, fetch the public OpenAPI spec and check this repository
+the sandbox API, fetch the public OpenAPI spec and check this repository
 for a newer version. Never put production keys in a skill or script.

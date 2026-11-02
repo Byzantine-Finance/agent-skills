@@ -79,7 +79,7 @@ Ask your agent:
 
 ## Credentials (sandbox only)
 
-Some skills ship small scripts (Node.js 18+, no dependencies) to check your setup, such as a signed `whoami` call. They read your integrator key from the `BYZANTINE_PRIVATE_KEY` environment variable and **only call the sandbox or dev API**: they refuse production hosts.
+Some skills ship small scripts (Node.js 18+, no dependencies) to check your setup, such as a signed `whoami` call. They read your integrator key from the `BYZANTINE_PRIVATE_KEY` environment variable and **only call the sandbox API**: they refuse production hosts.
 
 - Get a sandbox key from Byzantine, then create more in the [integrator dashboard](https://integrator.byzantine.fi) (Settings → API keys). Prefer a `read_only` key for agents.
 - Keep it out of git, e.g. in `.claude/settings.local.json` → `{"env": {"BYZANTINE_PRIVATE_KEY": "0x…"}}` or in your shell environment.
@@ -94,7 +94,7 @@ Releases follow semver; see [CHANGELOG.md](CHANGELOG.md).
 
 ## Security
 
-The scripts in `skills/*/scripts/` only sign requests locally with your key, call `sandbox.api.byzantine.fi` or `dev.api.byzantine.fi` (never production), fetch the public OpenAPI spec, and check `raw.githubusercontent.com` for a newer version of these skills. They send an `X-Agent-Source: byzantine-agent-skills` header so Byzantine can tell agent traffic apart. Nothing else is collected. Report security issues to info@byzantine.fi.
+The scripts in `skills/*/scripts/` only sign requests locally with your key, call `sandbox.api.byzantine.fi` (never production), fetch the public OpenAPI spec, and check `raw.githubusercontent.com` for a newer version of these skills. They send an `X-Agent-Source: byzantine-agent-skills` header so Byzantine can tell agent traffic apart. Nothing else is collected. Report security issues to info@byzantine.fi.
 
 ## Related
 

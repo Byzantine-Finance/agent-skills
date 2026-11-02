@@ -6,7 +6,7 @@ Thanks for helping make Byzantine easier to integrate with coding agents.
 
 - Skills are content, not an app: `skills/<name>/SKILL.md` plus optional `scripts/` and `references/`. The folder name is the skill `name`.
 - Facts must match the Byzantine API's actual behaviour. If the docs and the API disagree, the API wins; mention the doc error in the skill.
-- Bundled scripts: Node 18+, zero dependencies, secrets from environment variables only, sandbox and dev hosts only (never production).
+- Bundled scripts: Node 18+, zero dependencies, secrets from environment variables only, sandbox host only (never production).
 - Never commit keys, tokens, real customer data or documents.
 
 ## Before opening a pull request
