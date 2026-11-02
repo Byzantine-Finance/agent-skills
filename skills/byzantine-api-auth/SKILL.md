@@ -3,7 +3,7 @@ name: byzantine-api-auth
 description: Use when writing or debugging code that authenticates to the Byzantine Finance API (api.byzantine.fi, sandbox.api.byzantine.fi) - X-Pubkey / X-Timestamp / X-Signature headers, ECDSA request signing, integrator private keys, read_only vs read_write credentials, or errors like 401 "Invalid signature", "Invalid public key", "Stale signature", 403 "Read-only credentials cannot perform this action", 429 "Rate limit exceeded".
 license: Apache-2.0
 metadata:
-  version: "0.1.1"
+  version: "0.1.2"
 ---
 
 # Byzantine API request signing

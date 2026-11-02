@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.2
+
+- `byzantine-api-auth`: `byz-request.mjs` now refuses absolute or protocol-relative paths (which could send the signed request to another host), requires https (http only for localhost) and refuses redirects, so the signing headers can only go to the checked sandbox host. Reported by the Socket audit.
+
 ## 0.1.1
 
 Security audit follow-up and accuracy fixes.

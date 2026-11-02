@@ -3,7 +3,7 @@ name: byzantine-money-movement
 description: Use when building or debugging Byzantine Finance deposits, withdrawals, account activation, stablecoin transfers, queued withdrawal cancellation or the Base→Ethereum vault upgrade - the get-*-payload-passkey endpoints, bodyToSign, transactionId, sign-payload-passkey, webAuthnStamp, passkey signing, fiatDepositInstructions, HTTP 202 withdrawal_initiated, "Unknown transaction ID", "Account is not delegating to Atlas", or transaction statuses.
 license: Apache-2.0
 metadata:
-  version: "0.1.1"
+  version: "0.1.2"
 ---
 
 # Byzantine money movement

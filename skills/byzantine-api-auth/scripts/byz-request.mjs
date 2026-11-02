@@ -23,6 +23,21 @@ if (!ALLOWED_HOSTS.has(base.hostname)) {
   console.error(`refused: ${base.hostname} is not a sandbox host. This script never calls production.`);
   process.exit(3);
 }
+const LOCAL = new Set(["localhost", "127.0.0.1"]);
+if (base.protocol !== "https:" && !(base.protocol === "http:" && LOCAL.has(base.hostname))) {
+  console.error(`refused: ${base.protocol}//${base.hostname} must use https (http is only allowed for localhost).`);
+  process.exit(3);
+}
+// The request path must stay on the checked host: no absolute or protocol-relative URLs, no backslash tricks.
+if (!pathAndQuery.startsWith("/") || pathAndQuery.startsWith("//") || pathAndQuery.includes("\\")) {
+  console.error('refused: the path must start with a single "/" (for example /v1/integrator/whoami), not a full URL.');
+  process.exit(2);
+}
+const target = new URL(pathAndQuery, base);
+if (target.origin !== base.origin) {
+  console.error(`refused: the path resolves to ${target.origin}, not ${base.origin}.`);
+  process.exit(3);
+}
 if (body) {
   try {
     JSON.parse(body);
@@ -35,7 +50,8 @@ if (body) {
 try {
   const { headers, message } = sign(loadPrivateKey(process.env.BYZANTINE_PRIVATE_KEY), method, pathAndQuery, body);
   // Send exactly the bytes that were signed: same path string, same body string.
-  const res = await fetch(new URL(pathAndQuery, base), {
+  const res = await fetch(target, {
+    redirect: "error", // never forward the signing headers to another location
     method: method.toUpperCase(),
     headers: { ...headers, "X-Agent-Source": "byzantine-agent-skills" },
     body: body || undefined,

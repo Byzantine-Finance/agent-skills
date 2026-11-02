@@ -3,7 +3,7 @@ name: byzantine-webhooks
 description: Use when receiving, verifying or debugging Byzantine Finance webhooks or lifecycle events - X-Byzantine-Webhook-Signature / Delivery-Id / Event-Id / Timestamp headers, webhook subscriptions and their publicKey, customer.* KYC/KYB events, transaction.* events, delivery retries, replaying events with GET /v1/query/events, or a receiver that rejects valid deliveries.
 license: Apache-2.0
 metadata:
-  version: "0.1.1"
+  version: "0.1.2"
 ---
 
 # Byzantine webhooks

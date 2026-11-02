@@ -119,3 +119,14 @@ test("byz-openapi reads the bundled snapshot offline and never writes a cache", 
   const show = spawnSync(process.execPath, [script, "show", "get_user_details"], { encoding: "utf8" });
   assert.equal(show.status, 0, show.stderr);
 });
+
+test("byz-request: the path cannot redirect the signed request to another host", () => {
+  for (const bad of ["https://evil.example/v1/x", "//evil.example/v1/x", "/\\evil.example/v1/x", "v1/relative"]) {
+    const r = run("byz-request.mjs", ["GET", bad], { BYZANTINE_PRIVATE_KEY: PRIV });
+    assert.notEqual(r.status, 0, `${bad} must be refused`);
+    assert.match(r.stderr, /refused/, bad);
+  }
+  const http = run("byz-request.mjs", ["GET", "/v1/integrator/whoami"], { BYZANTINE_PRIVATE_KEY: PRIV, BYZANTINE_BASE_URL: "http://sandbox.api.byzantine.fi" });
+  assert.equal(http.status, 3);
+  assert.match(http.stderr, /https/);
+});
