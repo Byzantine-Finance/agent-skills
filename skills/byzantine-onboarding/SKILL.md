@@ -21,6 +21,8 @@ Every end user needs a Byzantine **account** (individual or company), a complete
 6. verificationStatus = active               → activate the account per chain (byzantine-money-movement)
 ```
 
+What is expected from the user (documents, UBO rules, timings, how to explain it): `references/what-kyc-kyb-expects.md`. Read it before collecting any data.
+
 Details: `references/individual-kyc.md`, `references/entity-kyb.md`, `references/passkeys-and-otp.md`, `references/mobile-passkeys.md` (iOS / Android / React Native), `references/multi-user-and-roles.md`.
 
 ## Minimal individual account
