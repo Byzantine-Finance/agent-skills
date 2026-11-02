@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- `byzantine-webhooks`, `byzantine-money-movement`: all 11 `transaction.*` events are emitted; status is in `data.transaction.status` with nullable `data.previousStatus`.
+- Pin `@byzantine/integrator-sdk@1.15.0` for `byz-passkey-tool`.
+
 ## 0.1.0
 
 First release.

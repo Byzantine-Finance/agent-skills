@@ -66,11 +66,11 @@ Withdraw all: read `get-account-balances?accountId=…&chainId=…` (camelCase `
 
 Statuses (`get-transaction`, `get-all-transactions`): `processing → completed`; fiat: `waiting_for_funds → funds_in_transfer → funds_received → processing → completed` (or `refunded`); off-ramp: `processing → waiting_for_funds → funds_received → completed`; queued: `withdrawal_initiated → processing → completed` or `cancelled`; failures `simulation_failed`, `reverted`. Terminal: `completed`, `refunded`, `cancelled`.
 
-Poll `get-transaction` after signing. Only `transaction.withdrawal_initiated` is emitted as a webhook today; other `transaction.*` types exist in the enum but are not sent yet.
+Poll `get-transaction` after signing, or subscribe to `transaction.*` webhooks (one per status transition; status in `data.transaction.status`, see `byzantine-webhooks`).
 
 ## Testing in sandbox without a frontend
 
-`npx -p @byzantine/integrator-sdk byz-passkey-tool` opens a local page (rpId `localhost`) to enroll a passkey and sign a `bodyToSign` by hand. KYC/KYB auto-approves in sandbox; no fiat moves (on-ramp flows stay at `waiting_for_funds`) and no payment webhooks are sent.
+`npx -p @byzantine/integrator-sdk@1.15.0 byz-passkey-tool` opens a local page (rpId `localhost`) to enroll a passkey and sign a `bodyToSign` by hand. KYC/KYB auto-approves in sandbox; no fiat moves (on-ramp flows stay at `waiting_for_funds`) and no payment webhooks are sent.
 
 Doc pages that are out of date: `/submit/send-transaction-passkey` and WebAuthn stamps sent as headers (use `sign-payload-passkey` with `webAuthnStamp` in the body); "activate per vault" (it is per chain); `getStamp(payload)` with an object (it takes a string).
 

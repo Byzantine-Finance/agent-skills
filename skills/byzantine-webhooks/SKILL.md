@@ -61,7 +61,7 @@ Next.js route handler: `const raw = Buffer.from(await req.arrayBuffer())` before
 ## Events actually sent today
 
 - `customer.created | under_review | awaiting_associated_person_information | resubmission_requested | active | rejected | deactivated | deleted`. `data` = `{ customer: {accountId, customerType: "individual"|"entity", userId, entityId, name, email, verificationStatus, createdAt}, beneficiary | null, reasonCodes | null }`.
-- `transaction.withdrawal_initiated` only. The other `transaction.*` types exist in the API enum but are **not emitted yet**: poll `GET /v1/query/get-transaction` for transaction progress.
+- `transaction.withdrawal_initiated | waiting_for_funds | payment_in_review | funds_in_transfer | funds_received | processing | completed | simulation_failed | reverted | refunded | cancelled`: one event per observable status transition. `data` = `{ transaction: {…summary after the transition, incl. status}, previousStatus | null }`. Read the current status from `data.transaction.status` (there is no `data.status`). `payment_in_review` is not a completed payment. `related.transactionId` and `related.accountId` are set. Events can arrive out of order: query `get-transaction` when reconciling the latest state.
 
 `verificationStatus` values (API enum): `not_started`, `init`, `awaiting_information`, `under_review`, `awaiting_associated_person_information`, `resubmission_requested`, `active`, `rejected`, `inactive`. Some doc pages say `waiting_for_information`: the API sends `awaiting_information`. Unknown future values must not crash the handler. Event names say `deactivated`/`deleted`; the status they carry is `inactive`.
 
