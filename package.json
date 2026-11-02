@@ -1,6 +1,6 @@
 {
   "name": "byzantine-agent-skills",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Official Byzantine Finance agent skills: integrate the Byzantine API with Claude Code, Cursor, Codex, Copilot and other coding agents.",
   "license": "Apache-2.0",

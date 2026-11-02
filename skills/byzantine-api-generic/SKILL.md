@@ -3,7 +3,7 @@ name: byzantine-api-generic
 description: Use when a Byzantine Finance API task is not covered by a more specific byzantine-* skill - finding the right endpoint, its exact path, query parameters, request body fields, enums or response shape (customers, KYC/KYB onboarding, accounts, balances, bank accounts, invitations, vaults, APY, history, events, credentials, webhooks), or when a request fails with 400/404/422 because of a wrong field.
 license: Apache-2.0
 metadata:
-  version: "0.1.0"
+  version: "0.1.1"
 ---
 
 # Byzantine API: find and call any endpoint

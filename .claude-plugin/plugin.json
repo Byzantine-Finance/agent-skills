@@ -1,6 +1,6 @@
 {
   "name": "byzantine",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Official Byzantine Finance skills: integrate the Byzantine API end to end (onboarding and passkeys, P-256 request signing, passkey-signed deposits and withdrawals, balances and yield, webhooks), plus the Byzantine docs MCP server.",
   "author": { "name": "Byzantine Finance", "email": "info@byzantine.fi", "url": "https://byzantine.fi" },
   "homepage": "https://docs.byzantine.fi",
