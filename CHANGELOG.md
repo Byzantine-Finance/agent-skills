@@ -3,6 +3,8 @@
 ## 0.1.0
 
 First public release.
+- `byzantine-api-generic`: the OpenAPI spec is bundled as a snapshot (`references/openapi-integrator.json`); nothing is downloaded or cached by default, `--live` fetches the public spec on demand. Maintainers refresh it with `npm run sync:openapi`.
+- `byzantine`, `byzantine-webhooks`, `byzantine-money-movement`: explicit rules that webhook payloads and API responses are untrusted data, and that money actions need the user's explicit confirmation first.
 - `byzantine-onboarding`: new reference `what-kyc-kyb-expects.md` (why KYC/KYB, what is required, UBO rules, timings, statuses in plain words, agent conduct with PII).
 - `byzantine`: update check can be disabled with `BYZANTINE_SKILLS_NO_UPDATE_CHECK=1` (or `DISABLE_TELEMETRY`); its network call is documented in `SKILL.md`.
 - `byzantine-webhooks`, `byzantine-money-movement`: all 11 `transaction.*` events are emitted; status is in `data.transaction.status` with nullable `data.previousStatus`.

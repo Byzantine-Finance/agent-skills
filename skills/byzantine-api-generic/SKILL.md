@@ -8,7 +8,7 @@ metadata:
 
 # Byzantine API: find and call any endpoint
 
-The live OpenAPI spec (`https://api.byzantine.fi/api-docs/openapi-integrator.json`, 52 operations) is the contract. **Never guess a path, a field name or an enum value: look it up.**
+The OpenAPI spec bundled with this skill (`references/openapi-integrator.json`, a snapshot of `https://api.byzantine.fi/api-docs/openapi-integrator.json`, 52 operations) is the contract. **Never guess a path, a field name or an enum value: look it up.**
 
 ## Look it up
 
@@ -20,7 +20,7 @@ node scripts/byz-openapi.mjs schema <SchemaName>     # e.g. schema VerificationS
 node scripts/byz-openapi.mjs list
 ```
 
-Cached 24 h in `~/.cache/byzantine-agent-skills/`.
+Nothing is downloaded by default: the lookup reads the bundled snapshot. If a field or endpoint you expect is missing, the snapshot may be older than the API: run the same command with `--live` as the first argument (one download of the public spec, kept in memory only) and, if it differs, tell the user to update the skills (`byzantine` skill, version check).
 
 ## Then call it
 

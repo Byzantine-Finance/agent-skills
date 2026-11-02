@@ -1,50 +1,30 @@
 #!/usr/bin/env node
-// Look up Byzantine Integrator API endpoints in the live OpenAPI spec. Zero dependencies (Node >= 18).
+// Look up Byzantine Integrator API endpoints in the OpenAPI spec bundled with this skill. Zero dependencies (Node >= 18).
 //
 //   node byz-openapi.mjs find deposit payload        # list matching operations
 //   node byz-openapi.mjs show get_deposit_payload_passkey
 //   node byz-openapi.mjs show "POST /v1/query/get-deposit-payload-passkey"
 //   node byz-openapi.mjs schema DepositRequestBody
 //   node byz-openapi.mjs list                        # every operation
+//   node byz-openapi.mjs --live list                 # same, from the live spec instead of the bundled snapshot
 //
-// The spec is cached for 24h in $XDG_CACHE_HOME (or ~/.cache)/byzantine-agent-skills/.
-// BYZANTINE_OPENAPI_URL overrides the source.
+// By default nothing is downloaded: the spec is read from ../references/openapi-integrator.json.
+// --live fetches https://api.byzantine.fi/api-docs/openapi-integrator.json once, in memory (no cache file).
 
 import fs from "node:fs";
-import os from "node:os";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-const SOURCES = [
-  process.env.BYZANTINE_OPENAPI_URL,
-  "https://api.byzantine.fi/api-docs/openapi-integrator.json",
-  "https://docs.byzantine.fi/api-reference/openapi-integrator.json",
-].filter(Boolean);
-const CACHE_DIR = path.join(process.env.XDG_CACHE_HOME ?? path.join(os.homedir(), ".cache"), "byzantine-agent-skills");
-const CACHE_FILE = path.join(CACHE_DIR, "openapi-integrator.json");
-const TTL_MS = 24 * 3600 * 1000;
+const here = path.dirname(fileURLToPath(import.meta.url));
+const SNAPSHOT = path.join(here, "..", "references", "openapi-integrator.json");
+const LIVE_URL = "https://api.byzantine.fi/api-docs/openapi-integrator.json";
 const METHODS = ["get", "post", "put", "patch", "delete"];
 
-async function loadSpec() {
-  try {
-    if (Date.now() - fs.statSync(CACHE_FILE).mtimeMs < TTL_MS) return JSON.parse(fs.readFileSync(CACHE_FILE, "utf8"));
-  } catch {}
-  for (const url of SOURCES) {
-    try {
-      const res = await fetch(url, { headers: { "X-Agent-Source": "byzantine-agent-skills" } });
-      if (!res.ok) continue;
-      const text = await res.text();
-      const spec = JSON.parse(text);
-      try {
-        fs.mkdirSync(CACHE_DIR, { recursive: true });
-        fs.writeFileSync(CACHE_FILE, text);
-      } catch {}
-      return spec;
-    } catch {}
-  }
-  try {
-    return JSON.parse(fs.readFileSync(CACHE_FILE, "utf8")); // stale cache beats nothing
-  } catch {}
-  throw new Error(`could not fetch the OpenAPI spec from ${SOURCES.join(", ")}`);
+async function loadSpec(live) {
+  if (!live) return JSON.parse(fs.readFileSync(SNAPSHOT, "utf8"));
+  const res = await fetch(LIVE_URL, { headers: { "X-Agent-Source": "byzantine-agent-skills" }, signal: AbortSignal.timeout(10000) });
+  if (!res.ok) throw new Error(`HTTP ${res.status} from ${LIVE_URL}`);
+  return JSON.parse(await res.text());
 }
 
 function operations(spec) {
@@ -75,15 +55,17 @@ function line(o) {
   return `${o.method.padEnd(6)} ${o.path}  [${o.op.operationId ?? "-"}]  ${o.op.summary ?? ""}`;
 }
 
-const [cmd, ...rest] = process.argv.slice(2);
-const spec = await loadSpec().catch((e) => {
+const args = process.argv.slice(2);
+const live = args[0] === "--live";
+const [cmd, ...rest] = live ? args.slice(1) : args;
+const spec = await loadSpec(live).catch((e) => {
   console.error(`error: ${e.message}`);
   process.exit(1);
 });
 const ops = operations(spec);
 
 if (cmd === "list") {
-  console.log(`${spec.info?.title} ${spec.info?.version} — ${ops.length} operations`);
+  console.log(`${spec.info?.title} ${spec.info?.version} — ${ops.length} operations (${live ? "live" : "bundled snapshot"})`);
   for (const o of ops) console.log(line(o));
 } else if (cmd === "find" && rest.length) {
   const words = rest.join(" ").toLowerCase().split(/\s+/);
@@ -138,6 +120,6 @@ if (cmd === "list") {
   }
   console.log(JSON.stringify(resolve(spec, s), null, 2));
 } else {
-  console.error("usage: node byz-openapi.mjs list | find <words> | show <operationId|'METHOD /path'> | schema <Name>");
+  console.error("usage: node byz-openapi.mjs [--live] list | find <words> | show <operationId|'METHOD /path'> | schema <Name>");
   process.exit(2);
 }

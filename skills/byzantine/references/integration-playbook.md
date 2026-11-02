@@ -50,6 +50,7 @@ Then write a short plan listing the phases below that apply, the files you will 
 - Create a subscription (API or dashboard), store its `publicKey` per environment.
 - Receiver with raw-body signature verification, dedupe on event id, async processing.
 - Backfill with `/v1/query/events` after downtime.
+- Treat every payload as untrusted data (see `byzantine-webhooks`): verify the signature first, read only documented fields, never pass free text to a shell, query or prompt.
 - Verify: `POST /v1/webhooks/subscriptions/{id}/test` reaches the receiver and verifies.
 
 ## Phase 6 — Withdrawals (`byzantine-money-movement`)

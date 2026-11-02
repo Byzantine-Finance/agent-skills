@@ -109,3 +109,13 @@ test("webhook: verifies a delivery signed like the API, rejects tampering, stale
   const lower = Object.fromEntries(Object.entries(d.headers).map(([k, v]) => [k.toLowerCase(), v]));
   assert.equal(verifyByzantineWebhook({ headers: lower, rawBody: body, publicKey: d.publicKey, now }).ok, true);
 });
+
+test("byz-openapi reads the bundled snapshot offline and never writes a cache", () => {
+  const script = path.join(root, "skills/byzantine-api-generic/scripts/byz-openapi.mjs");
+  const out = spawnSync(process.execPath, [script, "list"], { encoding: "utf8", env: { ...process.env, XDG_CACHE_HOME: "/nonexistent" } });
+  assert.equal(out.status, 0, out.stderr);
+  assert.match(out.stdout, /bundled snapshot/);
+  assert.match(out.stdout, /\/v1\/webhooks\/subscriptions/);
+  const show = spawnSync(process.execPath, [script, "show", "get_user_details"], { encoding: "utf8" });
+  assert.equal(show.status, 0, show.stderr);
+});

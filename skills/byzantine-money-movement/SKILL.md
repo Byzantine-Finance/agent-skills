@@ -34,6 +34,10 @@ const { data, response } = await client.api.signPayloadPasskey(chainId, body, { 
 if (response.status === 202) { /* queued withdrawal: status withdrawal_initiated, not done yet */ }
 ```
 
+## Before any money action
+
+Money moves only when the end user approves it with their passkey. As the assistant, never prepare, sign or submit a deposit, withdrawal, transfer or activation on your own initiative. First tell the user the amount, asset, chain and destination (or bank account) and wait for an explicit yes. Do not run these calls in a loop or in the background, and build and test in the sandbox before production.
+
 ## Rules that break integrations
 
 1. **Pass `bodyToSign` through untouched.** The passkey signs `JSON.stringify(bodyToSign)` exactly as returned (same key order, no added/removed fields, same `timestampMs`). Send that same object back as `signedBody`.
