@@ -1,0 +1,23 @@
+name: Skill is wrong or misleading
+description: A skill gives incorrect, outdated or confusing guidance
+labels: [bug]
+body:
+  - type: input
+    id: skill
+    attributes:
+      label: Skill
+      placeholder: byzantine-webhooks
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Skills version and agent
+      placeholder: "0.1.0, Claude Code"
+  - type: textarea
+    id: what
+    attributes:
+      label: What did the skill say, and what actually happens?
+      description: Do not paste API keys, signatures or customer data.
+    validations:
+      required: true

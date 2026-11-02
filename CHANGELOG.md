@@ -1,15 +1,12 @@
 # Changelog
 
-## Unreleased
+## 0.1.0
 
+First public release.
 - `byzantine-onboarding`: new reference `what-kyc-kyb-expects.md` (why KYC/KYB, what is required, UBO rules, timings, statuses in plain words, agent conduct with PII).
 - `byzantine`: update check can be disabled with `BYZANTINE_SKILLS_NO_UPDATE_CHECK=1` (or `DISABLE_TELEMETRY`); its network call is documented in `SKILL.md`.
 - `byzantine-webhooks`, `byzantine-money-movement`: all 11 `transaction.*` events are emitted; status is in `data.transaction.status` with nullable `data.previousStatus`.
 - Pin `@byzantine/integrator-sdk@1.15.0` for `byz-passkey-tool`.
-
-## 0.1.0
-
-First release.
 
 - `byzantine`: entry point and router, integration order, non-negotiables, version check.
 - `byzantine-api-auth`: P-256 request signing contract (verified against the API), SDK usage, `byz-request` (sandbox only), `byz-sign`, `byz-diagnose` for 401s, signing pitfalls.
