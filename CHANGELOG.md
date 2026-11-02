@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- `byzantine`: update check can be disabled with `BYZANTINE_SKILLS_NO_UPDATE_CHECK=1` (or `DISABLE_TELEMETRY`); its network call is documented in `SKILL.md`.
 - `byzantine-webhooks`, `byzantine-money-movement`: all 11 `transaction.*` events are emitted; status is in `data.transaction.status` with nullable `data.previousStatus`.
 - Pin `@byzantine/integrator-sdk@1.15.0` for `byz-passkey-tool`.
 

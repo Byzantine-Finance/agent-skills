@@ -44,7 +44,7 @@ Integration order: onboard customer (KYC/KYB) → create passkey → activate ac
 
 ## Version check
 
-Run `node scripts/check-version.mjs` once per session. If it reports an update, tell the user the command it prints. Repeat that notice as the last line of your final answer.
+Run `node scripts/check-version.mjs` once per session. If it reports an update, tell the user the command it prints. The script makes one unauthenticated GET to `raw.githubusercontent.com/Byzantine-Finance/agent-skills/main/package.json`, sends no data and reads no credentials; set `BYZANTINE_SKILLS_NO_UPDATE_CHECK=1` to skip it.
 
 ## Sources of truth
 

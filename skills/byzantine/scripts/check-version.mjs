@@ -17,6 +17,11 @@ const cmp = (a, b) => {
   return 0;
 };
 
+if (process.env.BYZANTINE_SKILLS_NO_UPDATE_CHECK || process.env.DISABLE_TELEMETRY) {
+  console.log("SKIPPED: update check disabled by environment.");
+  process.exit(0);
+}
+
 try {
   const res = await fetch(LATEST_URL, { signal: AbortSignal.timeout(5000) });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
