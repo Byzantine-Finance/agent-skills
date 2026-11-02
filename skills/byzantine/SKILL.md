@@ -3,7 +3,7 @@ name: byzantine
 description: Use when a task involves Byzantine Finance in any way - integrating the Byzantine API or @byzantine/integrator-sdk, Byzantine Prime vaults (USDC, EURC), yield for end users, integrator keys, sandbox.api.byzantine.fi or api.byzantine.fi, the integrator dashboard, passkey-signed deposits and withdrawals, KYC/KYB onboarding through Byzantine, or Byzantine webhooks. Start here, then load the specific byzantine-* skill.
 license: Apache-2.0
 metadata:
-  version: "0.1.1"
+  version: "0.1.2"
 ---
 
 # Byzantine Finance
