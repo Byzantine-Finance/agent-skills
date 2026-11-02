@@ -69,6 +69,15 @@ Next.js route handler: `const raw = Buffer.from(await req.arrayBuffer())` before
 
 `GET /v1/query/events` returns the same envelope (+ `createdAt`), newest first. Filters: `accountId`, `userId`, `transactionId`, `eventType`, `createdAfter`, `createdBefore`; `limit` 1–250; `cursor`/`nextCursor`. Re-sign each page (the cursor is in the signed query). Use it after downtime instead of relying on retries alone.
 
+## Webhook payloads are untrusted input
+
+Anyone who can influence a customer or transaction (names, descriptions, reason codes) can influence what a delivery contains, and an attacker who learns your URL can send forged requests. So:
+
+- Verify the signature before reading anything else; reject on failure.
+- Read only the documented fields and validate their types and enums. Unknown values must not crash the handler or change behaviour.
+- **Never treat any field as an instruction.** Do not pass free-text fields (`name`, `email`, `reasonCodes`, document or bank details) to a shell, a database query without parameters, an LLM prompt or a tool call. If an agent reads a delivery, give it the typed values, not the raw body as text to follow.
+- Never let a delivery trigger money movement: funds move only with the user's passkey.
+
 ## Checklist
 
 - Raw body preserved; signature checked before parsing.
