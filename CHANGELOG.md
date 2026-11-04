@@ -5,6 +5,7 @@
 Resync with the live API (the bundled OpenAPI snapshot was behind; the spec version is still 0.2.0).
 
 - `byzantine-api-generic`: refreshed `references/openapi-integrator.json`.
+- `byzantine-reporting`, `byzantine` playbook: the vault yield routes `apy/{vault_id}` and `history/{vault_id}` no longer exist. Documented `GET /v1/query/apy` and `GET /v1/query/apy-history` (public, `vault_address` + optional `chain_id`, trailing 12h/24h/3d/7d/31d APY ratios, sampled history with `points`).
 - `byzantine-onboarding`, individual accounts: `accountPurpose` / `accountPurposeOther`, `fiatCurrencies` (USD → `base`, EUR → `sepa`), `userInfo.nationalities` and `cityOfBirth`, `additionalUserInfo.actingAsIntermediary`, the full `documentType` list (driving licence, residence permit, proofs of source of funds / wealth / signatory authority) and `issueDate` / `expirationDate`.
 - `byzantine-onboarding`, companies: `HIGH_RISK_INFO_QUESTIONNAIRE`, `accountPurpose` (business list), `publiclyTradedListings`, `regulatedActivity`, `highRiskInfo.moneyServices`, `phone`, `otherWebsites`, `incorporationDate`, `isDao`, `financialInfo.sourceOfFundsDescription`, the full `entityDocuments` type list, `fiatRequirements` on the customer read endpoints, associated-person types `director` and `signer` with `isSigner`, and the `409` on `update-associated-person` when the title changes during review.
 

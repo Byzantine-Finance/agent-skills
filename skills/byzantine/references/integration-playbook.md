@@ -42,7 +42,7 @@ Then write a short plan listing the phases below that apply, the files you will 
 ## Phase 4 — Balances, yield, history (`byzantine-reporting`)
 
 - Portfolio: `get-account-balances` (positions, idle, pending withdrawals).
-- Yield: `apy/{vault_id}`, `history/{vault_id}` for charts.
+- Yield: `apy` (current trailing APYs) and `apy-history` (sampled, for charts), both public and keyed by `vault_address`.
 - Activity: `get-transactions` per account, `get-all-transactions` for back office.
 
 ## Phase 5 — Webhooks (`byzantine-webhooks`)
