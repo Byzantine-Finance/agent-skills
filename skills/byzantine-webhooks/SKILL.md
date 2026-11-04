@@ -3,7 +3,7 @@ name: byzantine-webhooks
 description: Use when receiving, verifying or debugging Byzantine Finance webhooks or lifecycle events - X-Byzantine-Webhook-Signature / Delivery-Id / Event-Id / Timestamp headers, webhook subscriptions and their publicKey, customer.* KYC/KYB events, transaction.* events, delivery retries, replaying events with GET /v1/query/events, or a receiver that rejects valid deliveries.
 license: Apache-2.0
 metadata:
-  version: "0.1.3"
+  version: "0.1.4"
 ---
 
 # Byzantine webhooks
@@ -62,6 +62,8 @@ Next.js route handler: `const raw = Buffer.from(await req.arrayBuffer())` before
 
 - `customer.created | under_review | awaiting_associated_person_information | resubmission_requested | active | rejected | deactivated | deleted`. `data` = `{ customer: {accountId, customerType: "individual"|"entity", userId, entityId, name, email, verificationStatus, createdAt}, beneficiary | null, reasonCodes | null }`.
 - `transaction.withdrawal_initiated | waiting_for_funds | payment_in_review | funds_in_transfer | funds_received | processing | completed | simulation_failed | reverted | refunded | cancelled`: one event per observable status transition. `data` = `{ transaction: {…summary after the transition, incl. status}, previousStatus | null }`. Read the current status from `data.transaction.status` (there is no `data.status`). `payment_in_review` is not a completed payment. `related.transactionId` and `related.accountId` are set. Events can arrive out of order: query `get-transaction` when reconciling the latest state.
+
+**Typed parsing (TypeScript, `@byzantine/integrator-sdk` 2.0.0+).** After you verified the signature on the raw body and deduplicated by event `id`, `parseTransactionEvent(decodedBody)` validates a `transaction.*` event: it returns `{ ok: true, event }` discriminated by `event.payloadVersion` (1 or 2) or `{ ok: false, error: { code, path } }` (it does not throw; quarantine unknown versions or enums instead of dropping them). It does not verify signatures. New transaction events are version 2; customer and test events stay at version 1, and a persisted old payload keeps its original version on retries and replay, so never pick a parser from the event type alone.
 
 `verificationStatus` values (API enum): `not_started`, `init`, `awaiting_information`, `under_review`, `awaiting_associated_person_information`, `resubmission_requested`, `active`, `rejected`, `inactive`. Some doc pages say `waiting_for_information`: the API sends `awaiting_information`. Unknown future values must not crash the handler. Event names say `deactivated`/`deleted`; the status they carry is `inactive`.
 

@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.4
+
+- `byzantine-money-movement`, `byzantine-onboarding`: `byz-passkey-tool` now runs from `@byzantine/integrator-sdk@2.0.0` (published on npm).
+- `byzantine-webhooks`: documents `parseTransactionEvent` (SDK 2.0.0), the v1/v2 `payloadVersion` rules and the quarantine policy for unknown versions.
+
 ## 0.1.3
 
 Resync with the live API (the bundled OpenAPI snapshot was behind; the spec version is still 0.2.0).

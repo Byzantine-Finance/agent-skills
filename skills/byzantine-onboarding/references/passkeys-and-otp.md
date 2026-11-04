@@ -51,4 +51,4 @@ An expired or already-used session returns 400: restart at step 1.
 
 ## Testing without a frontend
 
-`npx -p @byzantine/integrator-sdk@1.15.0 byz-passkey-tool` opens a local page (rpId `localhost`) to enroll a passkey and sign payloads. Accounts created with these passkeys only sign from `localhost`.
+`npx -p @byzantine/integrator-sdk@2.0.0 byz-passkey-tool` opens a local page (rpId `localhost`) to enroll a passkey and sign payloads. Accounts created with these passkeys only sign from `localhost`.

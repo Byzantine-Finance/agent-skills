@@ -3,7 +3,7 @@ name: byzantine-money-movement
 description: Use when building or debugging Byzantine Finance deposits, withdrawals, account activation, stablecoin transfers, queued withdrawal cancellation or the Base→Ethereum vault upgrade - the get-*-payload-passkey endpoints, bodyToSign, transactionId, sign-payload-passkey, webAuthnStamp, passkey signing, fiatDepositInstructions, HTTP 202 withdrawal_initiated, "Unknown transaction ID", "Account is not delegating to Atlas", or transaction statuses.
 license: Apache-2.0
 metadata:
-  version: "0.1.3"
+  version: "0.1.4"
 ---
 
 # Byzantine money movement
@@ -74,7 +74,7 @@ Poll `get-transaction` after signing, or subscribe to `transaction.*` webhooks (
 
 ## Testing in sandbox without a frontend
 
-`npx -p @byzantine/integrator-sdk@1.15.0 byz-passkey-tool` opens a local page (rpId `localhost`) to enroll a passkey and sign a `bodyToSign` by hand. KYC/KYB auto-approves in sandbox; no fiat moves (on-ramp flows stay at `waiting_for_funds`) and no payment webhooks are sent.
+`npx -p @byzantine/integrator-sdk@2.0.0 byz-passkey-tool` opens a local page (rpId `localhost`) to enroll a passkey and sign a `bodyToSign` by hand. KYC/KYB auto-approves in sandbox; no fiat moves (on-ramp flows stay at `waiting_for_funds`) and no payment webhooks are sent.
 
 Doc pages that are out of date: `/submit/send-transaction-passkey` and WebAuthn stamps sent as headers (use `sign-payload-passkey` with `webAuthnStamp` in the body); "activate per vault" (it is per chain); `getStamp(payload)` with an object (it takes a string).
 
