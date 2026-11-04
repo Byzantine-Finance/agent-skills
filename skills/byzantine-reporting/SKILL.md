@@ -3,7 +3,7 @@ name: byzantine-reporting
 description: Use when showing Byzantine Finance balances, positions, yield or history to users or back-office teams - get-account-balances (positions, idle balance, pending_withdrawals, price_per_share), vault APY (apy/{vault_id}), share price history charts (history/{vault_id}), transaction lists (get-transactions, get-all-transactions), portfolio dashboards, or reconciling amounts.
 license: Apache-2.0
 metadata:
-  version: "0.1.2"
+  version: "0.1.3"
 ---
 
 # Byzantine reporting: balances, yield and history

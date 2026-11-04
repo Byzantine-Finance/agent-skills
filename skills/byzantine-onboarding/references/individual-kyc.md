@@ -4,7 +4,7 @@
 
 Required: `userInfo.{firstName,lastName,email}`, at least one `rootUsers[]` entry `{firstName,lastName,email,authenticators?}`, `byzantineTermsSignedAt` (string timestamp of T&C acceptance).
 
-Optional at creation (or later via update): `userInfo.{middleName, phone, birthDate, nationality, countryOfBirth, residentialAddress, socialSecurityNumber, profilePictureUrl}`, `additionalUserInfo`, `verificationDocuments`, `walletAddress`.
+Optional at creation (or later via update): `userInfo.{middleName, phone, birthDate, nationality, nationalities, countryOfBirth, cityOfBirth, residentialAddress, socialSecurityNumber, profilePictureUrl}`, `accountPurpose` (+ `accountPurposeOther`), `fiatCurrencies`, `additionalUserInfo`, `verificationDocuments`, `walletAddress`.
 
 - `userInfo` = the person verified (the customer). `rootUsers` = who can sign. Same person for a normal account.
 - `walletAddress` makes the account **self-custodial** (the user brings their own wallet; no embedded wallet is created). Leave it out for the standard embedded passkey wallet.
@@ -15,9 +15,13 @@ Optional at creation (or later via update): `userInfo.{middleName, phone, birthD
 Only `accountId` is required. Send any subset of:
 
 - `userInfo`: `phone`, `birthDate`, `nationality` and `countryOfBirth` (ISO alpha-3), `residentialAddress {streetLine1, streetLine2?, city, state?, postalCode, country}`…
-- `additionalUserInfo` (all four fields together, required for high-risk profiles): `employmentStatus` (`employed|homemaker|retired|self_employed|student|unemployed`), `expectedMonthlyPaymentsUsd` (`0_4999|5000_9999|10000_49999|50000_plus`), `sourceOfFunds` (`salary`, `savings`, `investments_loans`, `inheritance`, … see spec), `mostRecentOccupation` (6-digit code from the docs' occupation list).
+  - `nationalities[]`: every nationality held (ISO alpha-3); required by the fiat rails provider for EEA residents. `cityOfBirth`: recommended for EEA residents, required by EU law from 2027.
+- `accountPurpose`: `investment_purposes` | `protect_wealth` | `personal_or_living_expenses` | `other`. With `other`, `accountPurposeOther` (free text) is required.
+- `fiatCurrencies`: `["usd"]`, `["eur"]` or both (default both). It decides which fiat rails are requested for the customer (USD → `base`, EUR → `sepa`), so send only what the user will use.
+- `additionalUserInfo` (the four fields below together, required for high-risk profiles; it also carries `actingAsIntermediary`: `true` is refused, intermediaries are not onboarded): `employmentStatus` (`employed|homemaker|retired|self_employed|student|unemployed`), `expectedMonthlyPaymentsUsd` (`0_4999|5000_9999|10000_49999|50000_plus`), `sourceOfFunds` (`salary`, `savings`, `investments_loans`, `inheritance`, … see spec), `mostRecentOccupation` (6-digit code from the docs' occupation list).
 - `verificationDocuments[]`: `{documentType, issuingCountry, document, documentNumber?, description?}`
-  - `documentType`: `passport` | `national_id_front` | `national_id_back` | `proof_of_address` | `other` (`description` required for `other`).
+  - `documentType`: `passport` | `national_id_front` | `national_id_back` | `drivers_license_front` | `drivers_license_back` | `residence_permit_front` | `residence_permit_back` | `proof_of_address` | `proof_of_signatory_authority` | `proof_of_source_of_funds` | `proof_of_source_of_wealth` | `other` (`description` required for `other`).
+  - `issueDate` / `expirationDate` (`yyyy-mm-dd`, optional): a proof of address must be issued within the last 90 days; an expired identity document is refused, and the fiat rails provider revokes access when the document on file expires.
   - `documentNumber`: full number, required for passport / national ID.
   - `document`: `data:image/jpeg;base64,…` (jpeg, png, heic, tiff, pdf).
   - Proof of address: utility bill, bank statement, phone bill or tax document, issued less than 3 months ago.

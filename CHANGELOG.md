@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.3
+
+Resync with the live API (the bundled OpenAPI snapshot was behind; the spec version is still 0.2.0).
+
+- `byzantine-api-generic`: refreshed `references/openapi-integrator.json`.
+- `byzantine-onboarding`, individual accounts: `accountPurpose` / `accountPurposeOther`, `fiatCurrencies` (USD → `base`, EUR → `sepa`), `userInfo.nationalities` and `cityOfBirth`, `additionalUserInfo.actingAsIntermediary`, the full `documentType` list (driving licence, residence permit, proofs of source of funds / wealth / signatory authority) and `issueDate` / `expirationDate`.
+- `byzantine-onboarding`, companies: `HIGH_RISK_INFO_QUESTIONNAIRE`, `accountPurpose` (business list), `publiclyTradedListings`, `regulatedActivity`, `highRiskInfo.moneyServices`, `phone`, `otherWebsites`, `incorporationDate`, `isDao`, `financialInfo.sourceOfFundsDescription`, the full `entityDocuments` type list, `fiatRequirements` on the customer read endpoints, associated-person types `director` and `signer` with `isSigner`, and the `409` on `update-associated-person` when the title changes during review.
+
 ## 0.1.2
 
 - `byzantine-api-auth`: `byz-request.mjs` now refuses absolute or protocol-relative paths (which could send the signed request to another host), requires https (http only for localhost) and refuses redirects, so the signing headers can only go to the checked sandbox host. Reported by the Socket audit.
