@@ -3,7 +3,7 @@ name: byzantine-onboarding
 description: Use when creating or completing Byzantine Finance customer accounts - individual KYC or company KYB, create-individual-account, create-entity-account, update-*-account, associated persons (UBOs, representatives), missingDocuments / missingCompanyData, verification statuses, Terms & Conditions (byzantineTermsSignedAt), creating the user's passkey with the SDK (createPasskey, rpId), OTP fallback, inviting users, roles, or a wealth manager opening an account for a client.
 license: Apache-2.0
 metadata:
-  version: "0.1.2"
+  version: "0.1.3"
 ---
 
 # Byzantine onboarding: accounts, KYC/KYB and passkeys
